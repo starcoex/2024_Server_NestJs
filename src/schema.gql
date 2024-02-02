@@ -1,0 +1,623 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Address {
+  city: String
+  createdAt: DateTime!
+  id: Int!
+  lat: String
+  long: String
+  name: String
+  pincode: String
+  state: String
+  street: String
+  updatedAt: DateTime!
+  user: User
+}
+
+type AllAddressOutput {
+  address: [Address!]
+  error: String
+  id: Int
+  ok: Boolean!
+}
+
+type AllCategoryOutput {
+  categories: [Category!]
+  error: String
+  id: Int
+  ok: Boolean!
+}
+
+type AllDishOutput {
+  dish: [Dish!]
+  error: String
+  id: Int
+  ok: Boolean!
+}
+
+input AllOrdersInput {
+  status: OrderStatus!
+}
+
+type AllOrdersOutput {
+  error: String
+  id: Int
+  ok: Boolean!
+  orders: [Order!]
+}
+
+input AllRestaurantInput {
+  name: String
+  page: Int! = 1
+}
+
+type AllRestaurantOutput {
+  error: String
+  id: Int
+  ok: Boolean!
+  restaurants: [Restaurant!]
+  totalPages: Int
+  totalResults: Int
+}
+
+type Category {
+  coverImg: String
+  createdAt: DateTime!
+  id: Int!
+  name: String!
+  restaurantCount: Int!
+  restaurants: [Restaurant!]
+  slug: String!
+  totalPages: Int!
+  updatedAt: DateTime!
+  user: [User!]!
+}
+
+type CreaetDishOutput {
+  error: String
+  id: Int
+  ok: Boolean!
+}
+
+input CreateAddressInput {
+  city: String
+  lat: String
+  long: String
+  name: String
+  pincode: String
+  state: String
+  street: String
+}
+
+type CreateAddressOutput {
+  address: Address
+  error: String
+  id: Int
+  ok: Boolean!
+}
+
+input CreateDishInput {
+  description: String!
+  name: String!
+  options: [DishOptionInputType!]
+  price: Int!
+  restaurantId: Int!
+}
+
+input CreateOrderInput {
+  items: [CreateOrderItemInput!]!
+  retaurantId: Int!
+  status: OrderStatus!
+  total: Float
+}
+
+input CreateOrderItemInput {
+  dishId: Int!
+  options: [OrderItemOptionInputType!]
+}
+
+type CreateOrderOutput {
+  error: String
+  id: Int
+  ok: Boolean!
+}
+
+input CreatePaddleInput {
+  restaurantId: Int!
+  transactionId: String!
+}
+
+type CreatePaddleOutPut {
+  error: String
+  id: Int
+  ok: Boolean!
+}
+
+input CreateProfileInput {
+  avatarUrl: String
+  bio: String
+}
+
+type CreateProfileOutput {
+  error: String
+  id: Int
+  ok: Boolean!
+  profile: Profile
+}
+
+input CreateRestaurantInput {
+  address: String
+  categoryName: String!
+  coverImg: String
+  name: String
+}
+
+type CreateRestaurantOutput {
+  error: String
+  id: Int
+  ok: Boolean!
+}
+
+input CreateUserInput {
+  email: String!
+  emailVerified: Boolean = false
+  password: String!
+  role: UserRole!
+  userName: String!
+}
+
+type CreateUserOutput {
+  error: String
+  id: Int
+  ok: Boolean!
+  user: User
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input DeleteDishInput {
+  id: Int!
+}
+
+type DeleteDishOutput {
+  error: String
+  id: Int
+  ok: Boolean!
+}
+
+input DeleteRestaurantInput {
+  id: Int!
+}
+
+type DeleteRestaurantOutput {
+  error: String
+  id: Int
+  ok: Boolean!
+}
+
+type Dish {
+  createdAt: DateTime!
+  description: String!
+  id: Int!
+  name: String!
+  options: [DishOption!]
+  orderItems: [OrderItem!]
+  photo: String
+  price: Int!
+  restaurant: Restaurant
+  updatedAt: DateTime!
+}
+
+type DishChoice {
+  extra: Int
+  name: String!
+}
+
+input DishChoiceInputType {
+  extra: Int
+  name: String!
+}
+
+type DishOption {
+  choice: [DishChoice!]
+  extra: Int
+  name: String!
+}
+
+input DishOptionInputType {
+  choice: [DishChoiceInputType!]
+  extra: Int
+  name: String!
+}
+
+input EditAddressInput {
+  city: String
+  createdAt: DateTime
+  id: Int
+  lat: String
+  long: String
+  name: String
+  pincode: String
+  state: String
+  street: String
+  updatedAt: DateTime
+}
+
+type EditAddressOutput {
+  address: Address
+  error: String
+  id: Int
+  ok: Boolean!
+}
+
+input EditDishInput {
+  description: String
+  id: Int
+  name: String
+  options: [DishOptionInputType!]
+  price: Int
+}
+
+type EditDishOutput {
+  error: String
+  id: Int
+  ok: Boolean!
+}
+
+input EditOrderInput {
+  id: Int
+  status: OrderStatus
+}
+
+type EditOrderOutput {
+  error: String
+  id: Int
+  ok: Boolean!
+}
+
+input EditProfileInput {
+  avatarUrl: String
+  bio: String
+  id: Int
+}
+
+type EditProfileOutput {
+  error: String
+  id: Int
+  ok: Boolean!
+  profile: Profile
+}
+
+input EditProfileUserInput {
+  email: String
+  password: String
+  userName: String
+}
+
+type EditProfileUserOutput {
+  error: String
+  id: Int
+  ok: Boolean!
+  user: User
+}
+
+input EditRestaurantInput {
+  address: String
+  categoryName: String!
+  coverImg: String
+  id: Int
+  name: String
+}
+
+type EditRestaurantOutput {
+  error: String
+  id: Int
+  ok: Boolean!
+}
+
+input GetIdPorofileInput {
+  id: Int!
+}
+
+type GetIdProfileOutput {
+  error: String
+  id: Int
+  ok: Boolean!
+  profile: Profile
+}
+
+type GetPaddlesOutPut {
+  error: String
+  id: Int
+  ok: Boolean!
+  payments: [Payment!]
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type LoginOutput {
+  error: String
+  id: Int
+  ok: Boolean!
+  token: String
+}
+
+type Mutation {
+  createDish(input: CreateDishInput!): CreaetDishOutput!
+  createOrder(input: CreateOrderInput!): CreateOrderOutput!
+  createPaddle(input: CreatePaddleInput!): CreatePaddleOutPut!
+  createProfile(file: Upload, input: CreateProfileInput!): CreateProfileOutput!
+  createRestaurantt(input: CreateRestaurantInput!): CreateRestaurantOutput!
+  createUser(input: CreateUserInput!): CreateUserOutput!
+  createUserAddress(input: CreateAddressInput!): CreateAddressOutput!
+  deleteDish(input: DeleteDishInput!): DeleteDishOutput!
+  deleteRestaurant(input: DeleteRestaurantInput!): DeleteRestaurantOutput!
+  editAddress(input: EditAddressInput!): EditAddressOutput!
+  editDish(input: EditDishInput!): EditDishOutput!
+  editOrder(input: EditOrderInput!): EditOrderOutput!
+  editProfile(file: Upload, input: EditProfileInput!): EditProfileOutput!
+  editProfileUser(input: EditProfileUserInput!): EditProfileUserOutput!
+  editRestaurant(input: EditRestaurantInput!): EditRestaurantOutput!
+  login(input: LoginInput!): LoginOutput!
+  passwordResetUser(input: PasswordResetUserInput!): PasswordResetUserOutput!
+  takeOrder(input: TakeOrderInput!): TakeOrderOutput!
+  verifyEmail(input: VerifyEmailInput!): VerifyEmailOutput!
+}
+
+input MyRestaurantInput {
+  id: Int!
+}
+
+type MyRestaurantOutput {
+  error: String
+  id: Int
+  ok: Boolean!
+  restaurant: Restaurant
+}
+
+type MyRestaurantsOutput {
+  error: String
+  id: Int
+  ok: Boolean!
+  restaurants: [Restaurant!]
+}
+
+input OneCategoryInput {
+  page: Int! = 1
+  slug: String!
+}
+
+type OneCategoryOutput {
+  category: Category
+  error: String
+  id: Int
+  ok: Boolean!
+  totalPages: Int
+  totalResults: Int
+}
+
+input OneOrderInput {
+  id: Int!
+}
+
+type OneOrderOutput {
+  error: String
+  id: Int
+  ok: Boolean!
+  order: Order
+}
+
+input OneRestaurantInput {
+  id: Int!
+}
+
+type OneRestaurantOutput {
+  error: String
+  id: Int
+  ok: Boolean!
+  restaurant: Restaurant
+}
+
+type Order {
+  createdAt: DateTime!
+  customer: User
+  dish: [Dish!]!
+  driver: User
+  id: Int!
+  items: [OrderItem!]
+  restaurant: Restaurant!
+  status: OrderStatus!
+  total: Float
+  updatedAt: DateTime!
+}
+
+type OrderItem {
+  createdAt: DateTime!
+  dish: Dish
+  id: Int!
+  options: [OrderItemOption!]
+  updatedAt: DateTime!
+}
+
+type OrderItemOption {
+  choice: String
+  name: String!
+}
+
+input OrderItemOptionInputType {
+  choice: String
+  name: String!
+}
+
+enum OrderStatus {
+  Cooked
+  Cooking
+  Delivered
+  Pending
+  PickedUp
+}
+
+input PasswordResetUserInput {
+  email: String
+  password: String
+}
+
+type PasswordResetUserOutput {
+  error: String
+  id: Int
+  ok: Boolean!
+  user: User
+}
+
+type Payment {
+  createdAt: DateTime!
+  id: Int!
+  restaurant: Restaurant
+  transactionId: String!
+  updatedAt: DateTime!
+  user: User
+}
+
+type Profile {
+  avatarUrl: String
+  bio: String
+  createdAt: DateTime!
+  id: Int!
+  updatedAt: DateTime!
+  user: User
+}
+
+input ProfileUserInput {
+  id: Int!
+}
+
+type ProfileUserOutput {
+  error: String
+  id: Int
+  ok: Boolean!
+  user: User
+}
+
+type Query {
+  allAddress: AllAddressOutput!
+  allCategories: AllCategoryOutput!
+  allDish: AllDishOutput!
+  allOrders(input: AllOrdersInput!): AllOrdersOutput!
+  allRestaurnats(input: AllRestaurantInput!): AllRestaurantOutput!
+  findCategoryBySlug(input: OneCategoryInput!): OneCategoryOutput!
+  findRestaurantById(input: OneRestaurantInput!): OneRestaurantOutput!
+  getPaddles: GetPaddlesOutPut!
+  getProfileById(input: GetIdPorofileInput!): GetIdProfileOutput!
+  me: User!
+  myRestaurant(input: MyRestaurantInput!): MyRestaurantOutput!
+  myRestaurants: MyRestaurantsOutput!
+  oneOrder(input: OneOrderInput!): OneOrderOutput!
+  profileUser(input: ProfileUserInput!): ProfileUserOutput!
+  searchRestaurant(input: SerachRestaurantInput!): SearchRestaurantOutput!
+  searchUser(input: SerachUserInput!): SearchUserOutput!
+}
+
+type Restaurant {
+  address: String!
+  category: Category
+  coverImg: String!
+  createdAt: DateTime!
+  id: Int!
+  menu: [Dish!]!
+  name: String!
+  restaruantId: String
+  totalPages: Int!
+  totalResults: Int!
+  updatedAt: DateTime!
+  user: User
+}
+
+type SearchRestaurantOutput {
+  error: String
+  id: Int
+  ok: Boolean!
+  restaurants: [Restaurant!]
+  totalPages: Int
+  totalResults: Int
+}
+
+type SearchUserOutput {
+  error: String
+  id: Int
+  ok: Boolean!
+  users: [User!]
+}
+
+input SerachRestaurantInput {
+  name: String
+  page: Int! = 1
+  query: String!
+}
+
+input SerachUserInput {
+  page: Int! = 1
+  query: String!
+}
+
+type Subscription {
+  cookedOrders: Order!
+  orderUpdates(input: SubscriptionOrderUpdatesInput!): Order!
+  pendingOrders: Order!
+}
+
+input SubscriptionOrderUpdatesInput {
+  id: Int!
+}
+
+input TakeOrderInput {
+  id: Int!
+}
+
+type TakeOrderOutput {
+  error: String
+  id: Int
+  ok: Boolean!
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+type User {
+  address: [Address!]
+  createdAt: DateTime!
+  customerUser: [Order!]
+  driverUser: [Order!]
+  email: String!
+  emailVerified: Boolean
+  id: Int!
+  password: String!
+  profile: Profile
+  restaurants: [Restaurant!]!
+  role: UserRole!
+  updatedAt: DateTime!
+  userName: String!
+}
+
+enum UserRole {
+  Client
+  Delivery
+  Owner
+}
+
+input VerifyEmailInput {
+  code: String
+}
+
+type VerifyEmailOutput {
+  error: String
+  id: Int
+  ok: Boolean!
+}

@@ -1,0 +1,171 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  Client
+  Owner
+  Delivery
+}
+
+enum OrderStatus {
+  Pending
+  Cooking
+  Cooked
+  PickedUp
+  Delivered
+}
+
+enum SocialProviderTypes {
+  Facebook
+  Google
+  Kakao
+  Naver
+  Github
+}
+
+model SocialProvider {
+  id        Int                  @id @default(autoincrement())
+  provider  SocialProviderTypes?
+  socialId  String
+  createdAt DateTime             @default(now())
+  updatedAt DateTime             @updatedAt
+}
+
+model User {
+  id            Int           @id @default(autoincrement())
+  userName      String
+  email         String        @unique
+  password      String
+  role          Role          @default(Client)
+  emailVerified Boolean       @default(false)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  address       Address[]
+  profile       Profile?
+  restaurants   Restaurant[]
+  verifications Verification?
+  customerUser  Order[]       @relation(name: "customerUser")
+  driverUser    Order[]       @relation(name: "driverUser")
+  payments      Payment[]
+}
+
+model Address {
+  id        Int      @id @default(autoincrement())
+  name      String?
+  city      String?
+  lat       String?
+  long      String?
+  street    String?
+  pincode   String?
+  country   String?
+  state     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    Int?
+}
+
+model Profile {
+  id        Int      @id @default(autoincrement())
+  avatarUrl String?
+  bio       String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    Int?     @unique
+}
+
+model Verification {
+  id        Int      @id @default(autoincrement())
+  code      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int      @unique
+}
+
+model Restaurant {
+  id         Int       @id @default(autoincrement())
+  name       String
+  coverImg   String
+  address    String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  category   Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  categoryId Int?
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     Int
+  menu       Dish[]
+  orders     Order[]
+  payments   Payment[]
+}
+
+model Category {
+  id          Int          @id @default(autoincrement())
+  name        String       @unique
+  slug        String       @unique
+  coverImg    String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  restaurants Restaurant[]
+}
+
+model Dish {
+  id           Int         @id @default(autoincrement())
+  name         String
+  price        Int
+  photo        String?
+  description  String
+  dishOptions  Json?
+  restaurant   Restaurant  @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  restaurantId Int
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  orderItems   OrderItem[]
+}
+
+model Order {
+  id           Int         @id @default(autoincrement())
+  total        Float?
+  status       OrderStatus @default(Pending)
+  items        OrderItem[]
+  restaurant   Restaurant  @relation(fields: [restaurantId], references: [id])
+  restaurantId Int
+  customer     User?       @relation(name: "customerUser", fields: [customerId], references: [id], onDelete: SetNull)
+  customerId   Int?
+  dirver       User?       @relation(name: "driverUser", fields: [driverId], references: [id], onDelete: SetNull)
+  driverId     Int?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+model OrderItem {
+  id          Int      @id @default(autoincrement())
+  dishOptions Json?
+  dish        Dish?    @relation(fields: [dishId], references: [id], onDelete: Cascade)
+  dishId      Int?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  order       Order?   @relation(fields: [orderId], references: [id])
+  orderId     Int?
+}
+
+model Payment {
+  id            Int         @id @default(autoincrement())
+  transactionId String
+  user          User?       @relation(fields: [userId], references: [id])
+  userId        Int?
+  restaurant    Restaurant? @relation(fields: [restaurantId], references: [id])
+  restaurantId  Int?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
