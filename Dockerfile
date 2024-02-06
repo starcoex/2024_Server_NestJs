@@ -1,7 +1,12 @@
-FROM nginx:latest
+FROM node:latest
+WORKDIR /nestjs-server
+COPY package*.json ./
+COPY prisma ./prisma/
 
-COPY /path/to/nginx/nginx.conf /etc/nginx/nginx.conf
-COPY /path/to/nginx/mime.types /etc/nginx/mime.types
-COPY /path/to/nginx/conf.d/default.conf /etc/nginx/conf.d
-EXPOSE 80
 
+RUN npm install
+COPY . .
+RUN npx prisma generate
+
+
+CMD [ "npm", "run", "start:dev" ]

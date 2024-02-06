@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  nestjs-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nestjs-server
+    volumes:
+      - ./src: /nestjs-server/src
+    ports:
+      - 3000:3000
+    env_file:
+      - ./.env.docker
+
+  postgresql-db:
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile.mongo
+    image: postgres:latest
+    restart: always
+    container_name: postgres
+
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: coex2023
+    volumes:
+      - /data/postgres/: /var/lib/postgresql/data
+    ports:
+      - 5432:5432
