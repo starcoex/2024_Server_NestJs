@@ -8,7 +8,6 @@ services:
       dockerfile: Dockerfile
     restart: always
     volumes:
-      - ./main.ts: /nestjs-server/main.ts
       - ./src: /nestjs-server/src
     ports:
       - 3000:3000
